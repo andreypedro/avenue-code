@@ -3,23 +3,23 @@ import data from "../data/mockData.js";
 export const Person = {
   getById(req, res, next) {
     const id = req.params.id;
-    let dataFiltered = data.filter((row) => Number(row.id) === Number(id));
-    res.json(dataFiltered);
+    const person = data.filter((row) => Number(row.id) === Number(id))[0];
+    res.json(person);
   },
   getList(req, res, next) {
     const { firstName, lastName } = req.query;
 
-    let dataFiltered = data;
+    let persons = data;
 
     if (firstName) {
-      dataFiltered = data.filter((row) => row.firstName.includes(firstName));
+      persons = data.filter((row) => row.firstName.includes(firstName));
     }
 
     if (lastName) {
-      dataFiltered = data.filter((row) => row.lastName.includes(lastName));
+      persons = data.filter((row) => row.lastName.includes(lastName));
     }
 
-    res.json(dataFiltered);
+    res.json(persons);
   },
   create(req, res, next) {
     try {
@@ -36,15 +36,15 @@ export const Person = {
       );
       const id = lastId + 1;
 
-      const people = {
+      const person = {
         id,
         firstName,
         lastName,
       };
 
-      data.push(people);
+      data.push(person);
 
-      res.json(people);
+      res.status(201).json(person);
     } catch (err) {
       next(err);
     }
