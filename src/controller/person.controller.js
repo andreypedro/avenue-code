@@ -4,6 +4,11 @@ export const Person = {
   getById(req, res, next) {
     const id = req.params.id;
     const person = data.filter((row) => Number(row.id) === Number(id))[0];
+
+    if (!person) {
+      return res.status(404).json({ message: "Person not found" });
+    }
+
     res.json(person);
   },
   getList(req, res, next) {
