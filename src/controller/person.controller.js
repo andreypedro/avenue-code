@@ -12,7 +12,7 @@ export const Person = {
     res.json(person);
   },
   getList(req, res, next) {
-    const { firstName, lastName } = req.body;
+    const { firstName = "", lastName = "" } = req.body || {};
 
     let persons = data;
 
